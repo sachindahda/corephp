@@ -55,13 +55,13 @@ for ($i = 0; $i < $n; $i++) {
 }
 
 $n = 5;
-$k = 2 * $n - 7 ;
+$k = 2 * $n - 7;
 for ($i = 0; $i < $n; $i++) {
     for ($j = $k; $j > 0; $j--) {
         echo '&nbsp;';
     }
     $k++;
-    for ($j = 5; $j >$i; $j--) {
+    for ($j = 5; $j > $i; $j--) {
         echo ' *';
     }
     echo'<br>';
@@ -141,19 +141,67 @@ function digitSum($argument)
     return $sum;
 }
 
+echo'<BR>';
 echo digitSum(123);
-
-
+echo'<BR>';
 
 //Selection Sort
 
+function selection_sort(&$arr, $n)
+{
+    for ($i = 0; $i < $n; $i++) {
+        $low = $i;
+        for ($j = $i + 1; $j < $n; $j++) {
+            if ($arr[$low] > $arr[$j]) {
+                $low = $j;
+            }
+        }
+        if ($arr[$i] > $arr[$low]) {
+            $tmp = $arr[$i];
+            $arr[$i] = $arr[$low];
+            $arr[$low] = $tmp;
+        }
+    }
+}
 
-$arr = array(64, 25, 12, 22, 11); 
-$len = count($arr); 
-selection_sort($arr, $len); 
-echo "Sorted array : \n";  
-  
-for ($i = 0; $i < $len; $i++)  
-    echo $arr[$i] . " ";  
+$arr = array(13, 7, 21, 3, 63);
+$len = count($arr);
+selection_sort($arr, $len);
+echo "Sorted array : \n";
+for ($i = 0; $i < $len; $i++)
+    echo $arr[$i] . " ";
 
+//-------------------------
+
+$array = [
+    2, 3, 4, 5, 6, 7, 8, 9, 10, 11, [
+        20, 30, 40, 50, 60, 70, 80, 90, 100, 110
+    ]
+];
+$final_array = [];
+function multiples($array, &$final_array)
+{
+    echo'<pre>';
+
+    foreach ($array as $single) {
+        if (is_array($single)) {
+            multiples($single, $final_array);
+        } else {
+            if ($single % 2 == 0 and $single % 3 != 0) {
+                $final_array[2][] = $single;
+            } elseif ($single % 2 != 0 and $single % 3 == 0) {
+                $final_array[3][] = $single;
+            }
+            elseif($single % 2 == 0 and $single % 3 == 0){
+                $final_array['common'][] = $single;
+            }
+        }
+    }
+//    return $final_array;
+}
+
+multiples($array, $final_array);
+echo'<PRE>';
+print_R($final_array);
+die('here');
 ?>
